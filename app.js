@@ -1,8 +1,8 @@
-var express = require('express');
-var app = express();
-var { sequelize } = require('./db');
-var user = require('./controllers/usercontroller');
-var game = require('./controllers/gamecontroller');
+const express = require('express');
+const app = express();
+const { sequelize } = require('./db');
+const user = require('./controllers/usercontroller');
+const game = require('./controllers/gamecontroller');
 
 sequelize.sync();
 

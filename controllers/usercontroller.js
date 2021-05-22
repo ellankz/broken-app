@@ -1,9 +1,9 @@
-var router = require('express').Router();
-var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
+const router = require('express').Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const { sequelize, DataTypes } = require('../db');
-var User = require('../models/user')(sequelize, DataTypes);
+const User = require('../models/user')(sequelize, DataTypes);
 
 router.post('/signup', async (req, res) => {
   try {
@@ -36,7 +36,7 @@ router.post('/signin', async (req, res) => {
         user.passwordHash,
         function (err, matches) {
           if (matches) {
-            var token = jwt.sign({ id: user.id }, 'lets_play_sum_games_man', {
+            const token = jwt.sign({ id: user.id }, 'lets_play_sum_games_man', {
               expiresIn: 60 * 60 * 24,
             });
             res.json({

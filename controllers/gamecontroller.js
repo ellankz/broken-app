@@ -1,6 +1,6 @@
-var router = require('express').Router();
+const router = require('express').Router();
 const { sequelize, DataTypes } = require('../db');
-var Game = require('../models/game')(sequelize, DataTypes);
+const Game = require('../models/game')(sequelize, DataTypes);
 
 router.get('/all', async (req, res) => {
   try {
