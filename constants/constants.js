@@ -1,0 +1,15 @@
+module.exports = {
+  ERROR_NOT_AUTHORIZED: 'Not authorized',
+  ERROR_NO_TOKEN: 'No token provided',
+  DATA_NOT_FOUND: 'Data not found',
+  DATA_FETCHED: 'Data fetched',
+  GAME_CREATED: 'Game created',
+  GAME_NOT_UPDATED: 'Game not updated',
+  GAME_NOT_DELETED: 'Game not deleted',
+  SUCCESFULLY_UPDATED: 'Successfully updated',
+  SUCCESFULLY_DELETED: 'Successfully deleted',
+  SUCCESFULLY_AUTHENTICATED: 'Successfully authenticated',
+  PASSWORDS_NOT_MATCH: 'Passwords do not match',
+  USER_NOT_FOUND: 'User not found',
+  FAILED_AUTHENTICATE: 'Failed to authenticate',
+};

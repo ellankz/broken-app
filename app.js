@@ -1,8 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const { sequelize } = require('./db');
 const user = require('./controllers/usercontroller');
 const game = require('./controllers/gamecontroller');
+const { APP_PORT } = require('./config');
 
 sequelize.sync();
 
@@ -29,6 +31,6 @@ app.use('/', (req, res, next) => {
   return;
 });
 
-app.listen(3050, function () {
-  console.log('App is listening on 3050');
+app.listen(APP_PORT, function () {
+  console.log(`App is listening on ${APP_PORT}`);
 });

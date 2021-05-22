@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { DATA_NOT_FOUND, DATA_FETCHED } = require('../constants/constants');
 const { sequelize, DataTypes } = require('../db');
 const Game = require('../models/game')(sequelize, DataTypes);
 
@@ -7,11 +8,11 @@ router.get('/all', async (req, res) => {
     const games = await Game.findAll({ where: { owner_id: req.body.user.id } });
     res.status(200).json({
       games: games,
-      message: 'Data fetched.',
+      message: DATA_FETCHED,
     });
   } catch (err) {
     res.status(500).json({
-      message: err.message || 'Data not found',
+      message: err.message || DATA_NOT_FOUND,
     });
   }
 });
@@ -26,11 +27,11 @@ router.get('/:id', async (req, res) => {
         game: game,
       });
     } else {
-      throw new Error('Data not found');
+      throw new Error(DATA_NOT_FOUND);
     }
   } catch (err) {
     res.status(500).json({
-      message: err.message || 'Data not found.',
+      message: err.message || DATA_NOT_FOUND,
     });
   }
 });
@@ -47,7 +48,7 @@ router.post('/create', async (req, res) => {
     });
     res.status(200).json({
       game: game,
-      message: 'Game created.',
+      message: GAME_CREATED,
     });
   } catch (err) {
     console.log(err);
@@ -73,11 +74,11 @@ router.put('/update/:id', async (req, res) => {
       }
     );
     if (gameUpdated[0] === 0) {
-      throw new Error('Game not updated.');
+      throw new Error(GAME_NOT_UPDATED);
     } else {
       res.status(200).json({
         game: gameUpdated,
-        message: 'Successfully updated.',
+        message: SUCCESFULLY_UPDATED,
       });
     }
   } catch (err) {
@@ -96,11 +97,11 @@ router.delete('/remove/:id', async (req, res) => {
       },
     });
     if (game === 0) {
-      throw new Error('Game not deleted');
+      throw new Error(GAME_NOT_DELETED);
     } else {
       res.status(200).json({
         game: game,
-        message: 'Successfully deleted',
+        message: SUCCESFULLY_DELETED,
       });
     }
   } catch (err) {

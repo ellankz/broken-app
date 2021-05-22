@@ -1,4 +1,9 @@
 const jwt = require('jsonwebtoken');
+const { JWT_KEY } = require('../config');
+const {
+  ERROR_NOT_AUTHORIZED,
+  ERROR_NO_TOKEN,
+} = require('../constants/constants');
 const { sequelize, DataTypes } = require('../db');
 const User = require('../models/user')(sequelize, DataTypes);
 
@@ -7,13 +12,10 @@ module.exports = function (req, res, next) {
     next();
   } else {
     const sessionToken = req.headers.authorization;
-    console.log(sessionToken);
     if (!sessionToken)
-      return res
-        .status(403)
-        .send({ auth: false, message: 'No token provided.' });
+      return res.status(403).send({ auth: false, message: ERROR_NO_TOKEN });
     else {
-      jwt.verify(sessionToken, 'lets_play_sum_games_man', (err, decoded) => {
+      jwt.verify(sessionToken, JWT_KEY, (err, decoded) => {
         if (decoded) {
           User.findOne({ where: { id: decoded.id } }).then(
             (user) => {
@@ -22,11 +24,11 @@ module.exports = function (req, res, next) {
               next();
             },
             function () {
-              res.status(401).send({ error: 'not authorized' });
+              res.status(401).send({ error: ERROR_NOT_AUTHORIZED });
             }
           );
         } else {
-          res.status(400).send({ error: 'not authorized' });
+          res.status(400).send({ error: ERROR_NOT_AUTHORIZED });
         }
       });
     }
