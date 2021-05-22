@@ -17,4 +17,4 @@ sequelize.authenticate().then(
   }
 );
 
-module.exports = sequelize;
+module.exports = { sequelize, DataTypes: Sequelize };

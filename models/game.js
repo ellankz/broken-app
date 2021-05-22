@@ -1,4 +1,4 @@
-function game(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('game', {
     title: {
       type: DataTypes.STRING(25),
@@ -35,4 +35,4 @@ function game(sequelize, DataTypes) {
       allowNull: false,
     },
   });
-}
+};
