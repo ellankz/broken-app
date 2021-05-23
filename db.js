@@ -1,16 +1,27 @@
 const Sequelize = require('sequelize');
-                                //database username   password
-const sequelize = new Sequelize('gamedb', 'postgres', 'ghastb0i', {
-    host: 'localhost',
-    dialect: 'postgres'
-})
+const {
+  DB_NAME,
+  DB_USER,
+  DB_PASSWORD,
+  DB_HOST,
+  DB_DIALECT,
+  DB_PORT,
+} = require('./config');
+
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+  host: DB_HOST,
+  dialect: DB_DIALECT,
+  port: DB_PORT,
+});
 
 sequelize.authenticate().then(
-    function success() {
-        console.log("Connected to DB");
-    },
+  function success() {
+    console.log('Connected to DB');
+  },
 
-    function fail(err) {
-        console.log(`Error: ${err}`);
-    }
-)
+  function fail(err) {
+    console.log(`Error: ${err}`);
+  }
+);
+
+module.exports = { sequelize, DataTypes: Sequelize };
