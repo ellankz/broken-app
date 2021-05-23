@@ -4,8 +4,7 @@ const {
   ERROR_NOT_AUTHORIZED,
   ERROR_NO_TOKEN,
 } = require('../constants/constants');
-const { sequelize, DataTypes } = require('../db');
-const User = require('../models/user')(sequelize, DataTypes);
+const User = require('../models/user')(require('../db'));
 
 module.exports = function (req, res, next) {
   if (req.method == 'OPTIONS') {

@@ -9,8 +9,7 @@ const {
   FAILED_AUTHENTICATE,
 } = require('../constants/constants');
 
-const { sequelize, DataTypes } = require('../db');
-const User = require('../models/user')(sequelize, DataTypes);
+const User = require('../models/user')(require('../db'));
 
 router.post('/signup', async (req, res) => {
   try {
