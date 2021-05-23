@@ -14,10 +14,11 @@ module.exports = function (req, res, next) {
     if (!sessionToken)
       return res.status(403).send({ auth: false, message: ERROR_NO_TOKEN });
     else {
-      jwt.verify(sessionToken, JWT_KEY, (err, decoded) => {
+      jwt.verify(sessionToken, JWT_KEY, {}, (err, decoded) => {
         if (decoded) {
           User.findOne({ where: { id: decoded.id } }).then(
             (user) => {
+              console.log('user', user, user.id);
               req.user = user;
               console.log(`user: ${user}`);
               next();

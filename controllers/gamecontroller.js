@@ -1,10 +1,18 @@
 const router = require('express').Router();
-const { DATA_NOT_FOUND, DATA_FETCHED } = require('../constants/constants');
+const {
+  DATA_NOT_FOUND,
+  DATA_FETCHED,
+  GAME_CREATED,
+  GAME_NOT_UPDATED,
+  SUCCESFULLY_UPDATED,
+  GAME_NOT_DELETED,
+  SUCCESFULLY_DELETED,
+} = require('../constants/constants');
 const Game = require('../models/game')(require('../db'));
 
 router.get('/all', async (req, res) => {
   try {
-    const games = await Game.findAll({ where: { owner_id: req.body.user.id } });
+    const games = await Game.findAll({ where: { owner_id: req.user.id } });
     res.status(200).json({
       games: games,
       message: DATA_FETCHED,
@@ -19,7 +27,7 @@ router.get('/all', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const game = await Game.findOne({
-      where: { id: req.params.id, owner_id: req.body.user.id },
+      where: { id: req.params.id, owner_id: req.user.id },
     });
     if (game) {
       res.status(200).json({
@@ -39,7 +47,7 @@ router.post('/create', async (req, res) => {
   try {
     const game = await Game.create({
       title: req.body.game.title,
-      owner_id: req.body.user.id,
+      owner_id: req.user.id,
       studio: req.body.game.studio,
       esrb_rating: req.body.game.esrb_rating,
       user_rating: req.body.game.user_rating,
@@ -68,7 +76,7 @@ router.put('/update/:id', async (req, res) => {
       {
         where: {
           id: req.params.id,
-          owner_id: req.body.user.id,
+          owner_id: req.user.id,
         },
       }
     );
@@ -92,7 +100,7 @@ router.delete('/remove/:id', async (req, res) => {
     const game = await Game.destroy({
       where: {
         id: req.params.id,
-        owner_id: req.body.user.id,
+        owner_id: req.user.id,
       },
     });
     if (game === 0) {
